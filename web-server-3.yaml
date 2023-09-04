@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-server-3
+spec:
+  replicas: 2 # Number of replicas for redundancy
+  selector:
+    matchLabels:
+      app: web-server-3
+  template:
+    metadata:
+      labels:
+        app: web-server-3
+    spec:
+      containers:
+      - name: web-server-3-container
+        image: sd614apps/web-server-3:latest
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-server-3
+spec:
+  selector:
+    app: web-server-3
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
